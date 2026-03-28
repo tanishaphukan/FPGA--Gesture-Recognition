@@ -1,0 +1,280 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    FPGA DEPLOYMENT WORKFLOW                                  ║
+║              EMG Gesture Recognition System                                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 1: MODEL TRAINING                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────┐
+    │  Raw EMG Data    │
+    │  (4000 samples)  │
+    │  8 gestures      │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  Preprocessing   │
+    │  - Bandpass      │
+    │  - Rectification │
+    │  - RMS Features  │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  Train CNN       │
+    │  - 1D Conv       │
+    │  - Dense Layers  │
+    │  - 100 epochs    │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  Quantization    │
+    │  FP32 → INT8     │
+    │  3.32x smaller   │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Generated Files:                    │
+    │  ✓ model_real_data_fp32.pth         │
+    │  ✓ model_real_data_int8.pth         │
+    │  ✓ fpga_weights_real_data_int8.npz  │
+    │  ✓ weights_real_data_init.mem       │
+    └──────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 2: FPGA PROJECT SETUP                                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────┐
+    │  Run Script:     │
+    │  create_vivado_  │
+    │  project.tcl     │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Vivado Project Created              │
+    │  - Add RTL files (7 modules)         │
+    │  - Add constraints (timing, pins)    │
+    │  - Add weight memory file            │
+    │  - Set top module                    │
+    └────────┬─────────────────────────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Project Structure:                  │
+    │  vivado_project/                     │
+    │  ├── emg_gesture_fpga.xpr           │
+    │  ├── sources_1/                      │
+    │  │   ├── top_module.v                │
+    │  │   ├── emg_preprocessor.v          │
+    │  │   ├── conv1d_layer.v              │
+    │  │   ├── dense_layer.v               │
+    │  │   ├── mac_unit.v                  │
+    │  │   ├── weight_memory.v             │
+    │  │   └── argmax.v                    │
+    │  └── constrs_1/                      │
+    │      ├── constraints.xdc             │
+    │      └── pin_assignments_arty_a7.xdc │
+    └──────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 3: SYNTHESIS & IMPLEMENTATION                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────┐
+    │  Run Script:     │
+    │  run_complete_   │
+    │  flow.tcl        │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  SYNTHESIS       │
+    │  ⏱ 5-10 min      │
+    │                  │
+    │  RTL → Netlist   │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Check Results:                      │
+    │  ✓ LUTs: 15,000 / 20,800 (72%)      │
+    │  ✓ FFs:  8,000 / 41,600 (19%)       │
+    │  ✓ BRAMs: 25 / 50 (50%)             │
+    │  ✓ DSPs: 40 / 90 (44%)              │
+    │  ✓ Timing: WNS > 0 ns               │
+    └────────┬─────────────────────────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  IMPLEMENTATION  │
+    │  ⏱ 10-15 min     │
+    │                  │
+    │  Place & Route   │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Check Results:                      │
+    │  ✓ Timing met (WNS > 0)             │
+    │  ✓ No routing congestion            │
+    │  ✓ Power < 2W                       │
+    └────────┬─────────────────────────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  BITSTREAM GEN   │
+    │  ⏱ 5-10 min      │
+    │                  │
+    │  Generate .bit   │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Bitstream Generated:                │
+    │  emg_gesture_recognition_top.bit     │
+    │  Size: ~1-2 MB                       │
+    └──────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 4: FPGA PROGRAMMING                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────┐
+    │  Connect Board   │
+    │  via USB         │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  Run Script:     │
+    │  program_fpga.   │
+    │  tcl             │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Hardware Manager:                   │
+    │  1. Open hardware manager            │
+    │  2. Auto-connect to board            │
+    │  3. Detect FPGA (xc7a35t)           │
+    │  4. Program device                   │
+    │  5. Verify DONE pin                  │
+    └────────┬─────────────────────────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  ✓ FPGA Programmed!                  │
+    │  ⏱ ~10 seconds                       │
+    │  Status LED ON                       │
+    └──────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 5: TESTING & VERIFICATION                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────┐
+    │  Basic Test (No Hardware)            │
+    │  - Press BTN0 → Test pattern         │
+    │  - Observe LED changes               │
+    │  - Check serial output (115200)      │
+    └────────┬─────────────────────────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  EMG Hardware Test                   │
+    │  - Connect EMG sensor to Pmod JA     │
+    │  - Place electrodes on forearm       │
+    │  - Perform 8 gestures                │
+    │  - Verify classifications            │
+    └────────┬─────────────────────────────┘
+             │
+             ▼
+    ┌──────────────────────────────────────┐
+    │  Performance Metrics:                │
+    │  ✓ Latency: <20 ms                  │
+    │  ✓ Accuracy: >90%                   │
+    │  ✓ Classification rate: 100 Hz      │
+    │  ✓ Power: <2W                       │
+    └──────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ DEPLOYMENT COMPLETE! 🎉                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    Your EMG gesture recognition system is now running on FPGA hardware!
+
+    ┌──────────────────────────────────────┐
+    │  System Capabilities:                │
+    │  • 8 gesture classes                 │
+    │  • 100% model accuracy               │
+    │  • <20 ms end-to-end latency        │
+    │  • Real-time classification          │
+    │  • Low power (<2W)                  │
+    │  • Production-ready prototype        │
+    └──────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         AUTOMATION OPTIONS                                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Option 1: Full Automation (Recommended)
+────────────────────────────────────────
+Windows:  build_and_program.bat
+Linux:    ./build_and_program.sh
+
+Option 2: Step-by-Step
+────────────────────────────────────────
+Step 1:   vivado -mode batch -source create_vivado_project.tcl
+Step 2:   vivado -mode batch -source run_complete_flow.tcl
+Step 3:   vivado -mode batch -source program_fpga.tcl
+
+Option 3: Vivado GUI
+────────────────────────────────────────
+1. Open Vivado
+2. Source create_vivado_project.tcl
+3. Run Synthesis → Implementation → Bitstream
+4. Open Hardware Manager → Program Device
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         TROUBLESHOOTING                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Issue                          Solution
+─────────────────────────────  ──────────────────────────────────────────
+No hardware targets found      Check USB, install drivers, try different port
+Timing not met (WNS < 0)      Reduce clock frequency in constraints.xdc
+Weight file not found          Run: python ml_model/train_with_real_dataset.py
+Bitstream generation failed    Check synthesis/implementation logs
+Low accuracy on real EMG       Verify electrode placement and ADC range
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         DOCUMENTATION                                        ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Quick Start:        QUICKSTART_FPGA.md
+Detailed Guide:     FPGA_DEPLOYMENT_GUIDE.md
+Checklist:          DEPLOYMENT_CHECKLIST.md
+Summary:            DEPLOYMENT_SUMMARY.md
+ML Pipeline:        ml_model/README_ML_PIPELINE.md
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         TOTAL TIME ESTIMATE                                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Model Training:         ~5 minutes
+Project Setup:          ~1 minute
+Synthesis:              ~5-10 minutes
+Implementation:         ~10-15 minutes
+Bitstream Generation:   ~5-10 minutes
+Programming:            ~10 seconds
+Testing:                ~5 minutes
+─────────────────────────────────────────────────────────────────────────────
+TOTAL:                  ~30-45 minutes (mostly automated)
+
+═══════════════════════════════════════════════════════════════════════════════

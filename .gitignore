@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Machine Learning Models (large files)
+*.pth
+*.pkl
+*.h5
+*.onnx
+*.tflite
+
+# FPGA Build Files
+vivado_project/
+*.jou
+*.log
+*.str
+*.xpr
+.Xil/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+
+# Generated weight files (too large for git)
+ml_model/*.pth
+ml_model/*.npz
+ml_model/weights_*.mem
+
+# Simulation results
+*.vcd
+*.wdb
+*.pb
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Data files
+*.csv
+*.mat
+emg_data/
+
+# Plots
+*.png
+*.jpg
+*.pdf

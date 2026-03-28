@@ -1,0 +1,240 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    FPGA BOARD COMPARISON CHART                               ║
+║              EMG Gesture Recognition System                                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ RECOMMENDED BOARDS (Artix-7 / Modern)                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║ BASYS 3 - Best for Students/Hobbyists                              ⭐⭐⭐ ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ FPGA:          XC7A35T-CPG236                                             ║
+║ Price:         ~$150 USD                                                  ║
+║ Vendor:        Digilent                                                   ║
+║                                                                           ║
+║ Resources:                                                                ║
+║   LUTs:        20,800  (Design uses 15,000 = 72%) ✓                      ║
+║   Flip-Flops:  41,600  (Design uses 8,000 = 19%)  ✓                      ║
+║   BRAMs:       50      (Design uses 25 = 50%)     ✓                      ║
+║   DSPs:        90      (Design uses 40 = 44%)     ✓                      ║
+║                                                                           ║
+║ Features:                                                                 ║
+║   ✓ 16 LEDs                                                               ║
+║   ✓ 16 Switches                                                           ║
+║   ✓ 5 Push buttons                                                        ║
+║   ✓ 4-digit 7-segment display                                            ║
+║   ✓ 4 Pmod connectors                                                     ║
+║   ✓ Built-in USB-UART (no adapter needed!)                               ║
+║   ✓ USB programming (same cable for power)                               ║
+║   ✓ 100 MHz clock                                                         ║
+║                                                                           ║
+║ Pros:                                                                     ║
+║   + Perfect size for this project                                         ║
+║   + Modern Artix-7 architecture                                           ║
+║   + Excellent documentation                                               ║
+║   + Great student/education support                                       ║
+║   + Best value for money                                                  ║
+║   + No external UART adapter needed                                       ║
+║                                                                           ║
+║ Cons:                                                                     ║
+║   - Limited expansion room (72% utilized)                                 ║
+║                                                                           ║
+║ Verdict: ⭐ BEST CHOICE for this project!                                 ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║ ARTY A7-35T - Best for Makers                                      ⭐⭐⭐ ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ FPGA:          XC7A35T-CSG324                                             ║
+║ Price:         ~$130 USD                                                  ║
+║ Vendor:        Digilent                                                   ║
+║                                                                           ║
+║ Resources:     Same as Basys 3 (XC7A35T)                                 ║
+║   LUTs:        20,800  (72% used) ✓                                      ║
+║   BRAMs:       50      (50% used) ✓                                      ║
+║   DSPs:        90      (44% used) ✓                                      ║
+║                                                                           ║
+║ Features:                                                                 ║
+║   ✓ 4 LEDs, 4 RGB LEDs                                                   ║
+║   ✓ 4 Push buttons, 4 Switches                                           ║
+║   ✓ 4 Pmod connectors                                                     ║
+║   ✓ Arduino shield connector                                             ║
+║   ✓ Ethernet PHY                                                          ║
+║   ✓ USB-UART bridge                                                       ║
+║   ✓ 100 MHz clock                                                         ║
+║                                                                           ║
+║ Pros:                                                                     ║
+║   + Compact form factor                                                   ║
+║   + Arduino compatibility                                                 ║
+║   + Ethernet for networking projects                                      ║
+║   + Good for embedded systems                                             ║
+║                                                                           ║
+║ Cons:                                                                     ║
+║   - Fewer LEDs/switches than Basys 3                                      ║
+║   - No 7-segment display                                                  ║
+║                                                                           ║
+║ Verdict: Great for makers, less visual feedback than Basys 3             ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║ NEXYS A7-50T - For Larger Projects                                  ⭐⭐  ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ FPGA:          XC7A50T-CSG324                                             ║
+║ Price:         ~$250 USD                                                  ║
+║ Vendor:        Digilent                                                   ║
+║                                                                           ║
+║ Resources:                                                                ║
+║   LUTs:        32,600  (Design uses 15,000 = 46%) ✓✓                     ║
+║   Flip-Flops:  65,200  (Design uses 8,000 = 12%)  ✓✓                     ║
+║   BRAMs:       75      (Design uses 25 = 33%)     ✓✓                     ║
+║   DSPs:        120     (Design uses 40 = 33%)     ✓✓                     ║
+║                                                                           ║
+║ Features:                                                                 ║
+║   ✓ 16 LEDs, 16 Switches                                                 ║
+║   ✓ 5 Push buttons                                                        ║
+║   ✓ 8-digit 7-segment display                                            ║
+║   ✓ VGA, Audio, Ethernet                                                  ║
+║   ✓ USB-UART, USB-HID                                                     ║
+║   ✓ 100 MHz clock                                                         ║
+║                                                                           ║
+║ Pros:                                                                     ║
+║   + Plenty of room for expansion (46% used)                               ║
+║   + More peripherals (VGA, Audio)                                         ║
+║   + Larger 7-segment display                                              ║
+║                                                                           ║
+║ Cons:                                                                     ║
+║   - More expensive ($250)                                                 ║
+║   - Overkill for this project                                             ║
+║                                                                           ║
+║ Verdict: Good if you plan to expand, but Basys 3 is sufficient           ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ LEGACY BOARDS (Spartan-6)                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║ ATLYS - Spartan-6 Large                                              ⭐⭐  ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ FPGA:          XC6SLX45-CSG324                                            ║
+║ Price:         ~$300 USD (if available)                                   ║
+║ Vendor:        Digilent                                                   ║
+║ Status:        LEGACY (Spartan-6)                                         ║
+║                                                                           ║
+║ Resources:                                                                ║
+║   Slices:      6,822   (Design uses ~3,500 = 51%) ✓                      ║
+║   Flip-Flops:  54,576  (Design uses 8,000 = 15%)  ✓                      ║
+║   BRAMs:       116     (Design uses 25 = 22%)     ✓                      ║
+║   DSPs:        58      (Design uses 40 = 69%)     ✓                      ║
+║                                                                           ║
+║ Features:                                                                 ║
+║   ✓ 8 LEDs, 8 Switches                                                   ║
+║   ✓ 6 Push buttons                                                        ║
+║   ✓ HDMI, Ethernet, Audio                                                 ║
+║   ✓ USB-UART                                                              ║
+║   ✓ 100 MHz clock                                                         ║
+║                                                                           ║
+║ Pros:                                                                     ║
+║   + Design fits comfortably                                               ║
+║   + Good if you already have Spartan-6 tools                              ║
+║                                                                           ║
+║ Cons:                                                                     ║
+║   - Legacy architecture (Spartan-6)                                       ║
+║   - Requires ISE or old Vivado                                            ║
+║   - Expensive for legacy board                                            ║
+║   - Hard to find new                                                      ║
+║                                                                           ║
+║ Verdict: Only if you already own it. Buy Basys 3 instead.                ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║ NEXYS 3 - Spartan-6 Medium                                            ⚠️  ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ FPGA:          XC6SLX16-CS324                                             ║
+║ Price:         ~$200 USD (if available)                                   ║
+║ Vendor:        Digilent                                                   ║
+║ Status:        LEGACY (Spartan-6)                                         ║
+║                                                                           ║
+║ Resources:                                                                ║
+║   Slices:      2,278   (Design uses ~3,500 = 154%) ❌ TOO SMALL!         ║
+║   Flip-Flops:  18,224  (Design uses 8,000 = 44%)   ✓                     ║
+║   BRAMs:       32      (Design uses 25 = 78%)      ⚠️                    ║
+║   DSPs:        32      (Design uses 40 = 125%)     ❌ EXCEEDS!           ║
+║                                                                           ║
+║ Verdict: ❌ DOES NOT FIT without major optimization!                      ║
+║          Use Basys 3 or Atlys instead.                                    ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║ SPARTAN-6 LX9 MICROBOARD                                              ❌  ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ FPGA:          XC6SLX9-CSG324                                             ║
+║ Resources:     Too small (1,430 slices)                                   ║
+║                                                                           ║
+║ Verdict: ❌ WAY TOO SMALL - Not suitable for this project                ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ SUMMARY TABLE                                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────┬────────────┬────────┬────────┬──────┬────────┬──────────────┐
+│ Board        │ FPGA       │ LUTs   │ BRAMs  │ DSPs │ Price  │ Recommended? │
+├──────────────┼────────────┼────────┼────────┼──────┼────────┼──────────────┤
+│ Basys 3      │ XC7A35T    │ 20,800 │ 50     │ 90   │ $150   │ ⭐⭐⭐ YES   │
+│ Arty A7-35T  │ XC7A35T    │ 20,800 │ 50     │ 90   │ $130   │ ⭐⭐⭐ YES   │
+│ Nexys A7-50T │ XC7A50T    │ 32,600 │ 75     │ 120  │ $250   │ ⭐⭐ Good    │
+│ Nexys A7-100T│ XC7A100T   │ 63,400 │ 135    │ 240  │ $350   │ ⭐ Overkill  │
+│ Atlys        │ XC6SLX45   │ 6,822  │ 116    │ 58   │ $300   │ ⭐ Legacy    │
+│ Nexys 3      │ XC6SLX16   │ 2,278  │ 32     │ 32   │ $200   │ ❌ Too small │
+│ LX9 Micro    │ XC6SLX9    │ 1,430  │ 32     │ 16   │ $150   │ ❌ Too small │
+└──────────────┴────────────┴────────┴────────┴──────┴────────┴──────────────┘
+
+Design Requirements:
+  LUTs needed:  ~15,000
+  BRAMs needed: ~25
+  DSPs needed:  ~40
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ RECOMMENDATION                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🏆 BEST CHOICE: Basys 3 (XC7A35T-CPG236)
+
+Why?
+  ✓ Perfect size (72% utilization - not too tight, not wasteful)
+  ✓ Modern Artix-7 architecture
+  ✓ Best value ($150)
+  ✓ Excellent for students/hobbyists
+  ✓ Built-in USB-UART (no adapter needed)
+  ✓ 7-segment display for visual feedback
+  ✓ Great documentation and community support
+  ✓ Uses modern Vivado (not legacy ISE)
+
+Alternative: Arty A7-35T if you prefer compact form factor
+
+Avoid: Spartan-6 boards (legacy, harder to work with)
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ CONFIGURATION                                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+To configure for your board, edit create_vivado_project.tcl:
+
+# Basys 3
+set fpga_part "xc7a35tcpg236-1"
+
+# Arty A7-35T
+set fpga_part "xc7a35ticsg324-1L"
+
+# Nexys A7-50T
+set fpga_part "xc7a50ticsg324-1L"
+
+# Atlys (Spartan-6)
+set fpga_part "xc6slx45csg324-2"
+
+Pin assignments are automatically selected based on FPGA part!
+
+═══════════════════════════════════════════════════════════════════════════════
